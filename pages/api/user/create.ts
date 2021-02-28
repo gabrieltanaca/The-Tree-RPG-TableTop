@@ -1,11 +1,11 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
-import UserPainel from '../../../../src/db/Model/UserPainel'
-import { IUserDocument } from '../../../../src/utils/interfaces'
+import User from '../../../src/database/Models/User'
+import { UserModelI } from '../../../src/interfaces/Models'
 
 interface Request extends NextApiRequest {
-  body: IUserDocument
+  body: UserModelI
 }
 
 export default async (req: Request, res: NextApiResponse) => {
@@ -17,9 +17,9 @@ export default async (req: Request, res: NextApiResponse) => {
         password: bcrypt.hashSync(body.password, 10)
       }
 
-      const user = await (await UserPainel).create<unknown>(user_passcrypt)
+      const user = await (await User).create(user_passcrypt)
       console.log(user)
-      const token = jwt.sign({ user }, 'blog')
+      const token = jwt.sign({ user }, process.env.SECRET_KEY)
       return res.status(200).json({ success: true, token })
     default:
       return res.status(405).json({ message: 'Metodo não suportado' })

@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable camelcase */
-/* eslint-disable no-case-declarations */
+
 import { NextApiRequest, NextApiResponse } from 'next'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
@@ -26,7 +25,7 @@ export default async (req: Request, res: NextApiResponse) => {
       } else if (bcrypt.compareSync(password, user.password)) {
         const user_nopass: any = user
         user_nopass.password = undefined
-        const token = jwt.sign({ user: user_nopass }, '')
+        const token = jwt.sign({ user: user_nopass }, process.env.SECRET_KEY)
         return res.status(200).json({ success: true, token })
       } else {
         return res.status(400).json({ message: 'Usuário ou senha incorretos' })

@@ -1,10 +1,10 @@
-import mongoose, { Document, Schema } from 'mongoose'
+import mongoose, { Schema } from 'mongoose'
 import connectDatabase from '..'
-import { UserI } from '../../interfaces/Models'
+import { UserModelI } from '../../interfaces/Models'
 
 async function UserModel() {
   connectDatabase()
-  const UserSchema = new Schema<Document<UserI>>({
+  const UserSchema = new Schema<UserModelI>({
     name: { type: String },
     email: { type: String },
     password: { type: String },
