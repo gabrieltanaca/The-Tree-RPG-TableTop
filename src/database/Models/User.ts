@@ -11,8 +11,7 @@ async function UserModel() {
     image: { type: String },
     persons: { type: [String] }
   })
-  // UserSchema.index({ title: "text", tags: "text", linhafina: "text" });
-  return mongoose.models.UserPainel || mongoose.model('User', UserSchema)
+  return mongoose.models.User || mongoose.model('User', UserSchema)
 }
 
 export default UserModel()
